@@ -41,20 +41,23 @@ export default function Home() {
     return (
         <main className="bg-black text-white w-full min-h-screen flex flex-col sm:flex-row gap-8 items-center sm:justify-center">
             {/* Sidebar */}
-            <section className="sm:h-[340px] bg-gray-800 rounded-sm sm:ml-4 py-4 w-full sm:w-44 flex sm:flex-col gap-4 items-center justify-center">
+            <section className="sm:h-[400px] bg-gray-800 rounded-sm sm:ml-4 py-4 w-full sm:w-44 flex sm:flex-col gap-4 items-center justify-center">
                 <h2 className="font-semibold text-lg">Block Creator</h2>
                 <BlockOrigin color="green" />
                 <BlockOrigin color="red" />
             </section>
 
             {/* Main App */}
-            <section className="flex flex-col gap-4 items-center">
+            <section className="flex flex-col gap-4 items-center sm:min-w-[200px]">
                 {/* Equation Display */}
                 <section className="text-5xl mb-8 flex gap-2 h-12">
                     <span>{firstInteger}</span>
                     <span>{operator}</span>
                     <span>{secondInteger}</span>
                 </section>
+
+                {/* Randomizer Button */}
+                <button onClick={randomizeEquation} type="button" className="text-amber-300 px-4 py-2 hover:text-amber-100">Randomize</button>
 
                 {/* Positive Blocks */}
                 <section className="flex flex-col gap-2 items-center">
