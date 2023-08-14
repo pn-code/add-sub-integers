@@ -132,7 +132,12 @@ export default function Home() {
                 {/* Positive Blocks */}
                 <section className="flex flex-col gap-2 items-center">
                     <header className="flex gap-10">
-                        <h2 className="text-lg font-bold">Positive Blocks</h2>
+                        <h2 className="text-lg font-bold flex gap-2">
+                            <span className="bg-green-600 px-2 rounded-full">
+                                {positiveBlocks.length}
+                            </span>
+                            Positive Blocks
+                        </h2>
 
                         <section className="text-sm flex gap-4">
                             <button
@@ -167,7 +172,12 @@ export default function Home() {
                 {/* Negative Blocks */}
                 <section className="flex flex-col gap-2 items-center">
                     <header className="flex gap-10">
-                        <h2 className="text-lg font-bold">Negative Blocks</h2>
+                        <h2 className="text-lg font-bold flex gap-2">
+                            <span className="bg-red-600 px-2 rounded-full">
+                                {negativeBlocks.length}
+                            </span>
+                            Negative Blocks
+                        </h2>
 
                         <section className="text-sm flex gap-4">
                             <button
@@ -205,7 +215,9 @@ export default function Home() {
                     </h2>
                     <span
                         className={
-                            totalBlocks > 0 ? "text-lg text-green-300 font-bold" : "text-lg text-red-300 font-bold"
+                            totalBlocks > 0
+                                ? "text-lg text-green-300 font-bold"
+                                : "text-lg text-red-300 font-bold"
                         }
                     >
                         {totalBlocks}
