@@ -10,7 +10,8 @@ export default function Home() {
 
     const [positiveBlocks, setPositiveBlocks] = useState<string[]>([]);
     const [negativeBlocks, setNegativeBlocks] = useState<string[]>([]);
-    const [answer, setAnswer] = useState<number>();
+    const [answer, setAnswer] = useState<number | null>(null);
+
     const totalBlocks = positiveBlocks.length - negativeBlocks.length;
 
     useEffect(() => {
@@ -57,7 +58,7 @@ export default function Home() {
         randomizeOperator();
         randomizeIntegers();
         clearBlocks();
-        setAnswer()
+        setAnswer(null);
     };
 
     const handleKeepChangeChange = () => {
