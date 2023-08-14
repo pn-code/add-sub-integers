@@ -8,6 +8,9 @@ export default function Home() {
     const [secondInteger, setSecondInteger] = useState<number | null>(null);
     const [operator, setOperator] = useState<string | null>(null);
 
+    const [positiveBlocks, setPositiveBlocks] = useState<string[]>([]);
+    const [negativeBlocks, setNegativeBlocks] = useState<string[]>([]);
+
     const [modifiedSecondInteger, setModifiedSecondInteger] =
         useState(secondInteger);
     const [modifiedOperator, setModifiedOperator] = useState(operator);
@@ -36,72 +39,144 @@ export default function Home() {
     };
 
     const randomizeOperator = () => {
-        const randomOperator = generateRandomBoolean() ? "+" : "-"
+        const randomOperator = generateRandomBoolean() ? "+" : "-";
         setOperator(randomOperator);
         setModifiedOperator(randomOperator);
+    };
+
+    const clearPositiveBlocks = () => {
+        setPositiveBlocks([]);
+    };
+
+    const clearNegativeBlocks = () => {
+        setNegativeBlocks([]);
+    };
+
+    const clearBlocks = () => {
+        clearPositiveBlocks();
+        clearNegativeBlocks();
     };
 
     const randomizeEquation = () => {
         randomizeOperator();
         randomizeIntegers();
+        clearBlocks();
     };
 
     const handleKeepChangeChange = () => {
-        setModifiedOperator((prev) => prev === "+" ? "-" : "+");
-        setModifiedSecondInteger((prev) => prev! * -1)
-    }
+        setModifiedOperator((prev) => (prev === "+" ? "-" : "+"));
+        setModifiedSecondInteger((prev) => prev! * -1);
+    };
+
+    const handleOnDrop = (e: React.DragEvent) => {
+        const blockColor = e.currentTarget.id;
+        const blockType = e.dataTransfer.getData("blockType") as string;
+
+        if (blockColor === "red" && blockType === "origin") {
+            setNegativeBlocks((prev) => [...prev, "red"]);
+        } else if (blockColor === "green" && blockType === "origin") {
+            setPositiveBlocks((prev) => [...prev, "green"]);
+        }
+    };
+
+    const handleDragOver = (e: React.DragEvent) => {
+        e.preventDefault();
+    };
 
     return (
-        <main className="bg-black text-white w-full min-h-screen flex flex-col sm:flex-row gap-8 items-center sm:justify-center">
+        <main className="bg-black text-white w-full min-h-screen flex flex-col gap-8 items-center sm:justify-center">
             {/* Sidebar */}
-            <section className="sm:h-[400px] bg-gray-800 rounded-sm sm:ml-4 py-4 w-full sm:w-44 flex sm:flex-col gap-4 items-center justify-center">
+            <section className="sm:w-[300px] bg-gray-800 rounded-sm py-4 w-full flex gap-4 items-center justify-center">
                 <h2 className="font-semibold text-lg">Block Creator</h2>
-                <BlockOrigin color="green" />
-                <BlockOrigin color="red" />
+                <BlockOrigin />
             </section>
 
             {/* Main App */}
             <section className="flex flex-col gap-4 items-center sm:min-w-[200px]">
                 {/* Equation Display */}
-                <section className="text-5xl mb-8 flex gap-2 h-12">
+                <section className="text-3xl mb-8 flex items-center gap-2 h-12">
                     <span>{firstInteger}</span>
-                    <span>{operator}</span>
+                    <span className="px-2">{operator}</span>
                     <span>{secondInteger}</span>
                 </section>
 
-                <section className="text-5xl mb-8 flex gap-2 h-12">
+                <section className="text-3xl mb-8 flex items-center gap-2 h-12">
                     <span>{firstInteger}</span>
-                        <button type="button" onClick={handleKeepChangeChange} className="hover:bg-gray-800">
-                            {modifiedOperator}
-                        </button>
+                    <button
+                        type="button"
+                        onClick={handleKeepChangeChange}
+                        className="hover:bg-gray-800 rounded-md px-2"
+                    >
+                        {modifiedOperator}
+                    </button>
                     <span>{modifiedSecondInteger}</span>
                 </section>
 
-                {/* Randomizer Button */}
-                <button
-                    onClick={randomizeEquation}
-                    type="button"
-                    className="text-amber-300 px-4 py-2 hover:text-amber-100"
-                >
-                    Randomize
-                </button>
+                <section>
+                    {/* Randomizer Button */}
+                    <button
+                        onClick={randomizeEquation}
+                        type="button"
+                        className="text-amber-300 px-4 py-2 hover:text-amber-100"
+                    >
+                        Randomize
+                    </button>
+                    <button
+                        onClick={clearBlocks}
+                        type="button"
+                        className="text-indigo-400 px-4 py-2 hover:text-indigo-100"
+                    >
+                        Clear All
+                    </button>
+                </section>
 
                 {/* Positive Blocks */}
                 <section className="flex flex-col gap-2 items-center">
-                    <h2 className="text-lg font-bold">Positive Blocks</h2>
-                    <section className="flex gap-2 border-y-2 items-center border-gray-200 w-full py-2 justify-center">
-                        <Block color={"green"} />
-                        <Block color={"green"} />
-                        <Block color={"green"} />
+                    <header className="flex gap-10">
+                        <h2 className="text-lg font-bold">Positive Blocks</h2>
+                        <button
+                            onClick={clearPositiveBlocks}
+                            type="button"
+                            className="text-sm underline"
+                        >
+                            Clear
+                        </button>
+                    </header>
+
+                    <section
+                        id="green"
+                        onDragOver={(e) => handleDragOver(e)}
+                        onDrop={(e) => handleOnDrop(e)}
+                        className="px-4 flex gap-2 border-y-2 items-center border-gray-200 w-full py-2 justify-center h-20 bg-gray-800"
+                    >
+                        {positiveBlocks.map((block, idx) => (
+                            <Block key={idx} color={"green"} />
+                        ))}
                     </section>
                 </section>
 
                 {/* Negative Blocks */}
                 <section className="flex flex-col gap-2 items-center">
-                    <h2 className="text-lg font-bold">Negative Blocks</h2>
+                    <header className="flex gap-10">
+                        <h2 className="text-lg font-bold">Negative Blocks</h2>
+                        <button
+                            onClick={clearNegativeBlocks}
+                            type="button"
+                            className="text-sm underline"
+                        >
+                            Clear
+                        </button>
+                    </header>
 
-                    <section className="flex gap-2 border-y-2 items-center border-gray-200 w-full py-2 justify-center">
-                        <Block color={"red"} />
+                    <section
+                        id="red"
+                        onDragOver={(e) => handleDragOver(e)}
+                        onDrop={(e) => handleOnDrop(e)}
+                        className="px-4 flex gap-2 border-y-2 items-center border-gray-200 w-full py-2 justify-center h-20 bg-gray-800"
+                    >
+                        {negativeBlocks.map((block, idx) => (
+                            <Block key={idx} color={"red"} />
+                        ))}
                     </section>
                 </section>
             </section>
