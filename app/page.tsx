@@ -10,6 +10,7 @@ export default function Home() {
 
     const [positiveBlocks, setPositiveBlocks] = useState<string[]>([]);
     const [negativeBlocks, setNegativeBlocks] = useState<string[]>([]);
+    const [answer, setAnswer] = useState<number>();
     const totalBlocks = positiveBlocks.length - negativeBlocks.length;
 
     useEffect(() => {
@@ -56,6 +57,7 @@ export default function Home() {
         randomizeOperator();
         randomizeIntegers();
         clearBlocks();
+        setAnswer()
     };
 
     const handleKeepChangeChange = () => {
@@ -86,6 +88,14 @@ export default function Home() {
         } else {
             setNegativeBlocks((prev) => [...prev, "red"]);
         }
+    };
+
+    const handleCheckAnswer = () => {
+        const answer =
+            operator === "+"
+                ? firstInteger! + secondInteger!
+                : firstInteger! - secondInteger!;
+        setAnswer(answer);
     };
 
     return (
@@ -222,6 +232,16 @@ export default function Home() {
                     >
                         {totalBlocks}
                     </span>
+                </section>
+                <section className="flex justify-between w-full items-center px-8">
+                    <button
+                        onClick={handleCheckAnswer}
+                        type="button"
+                        className="bg-blue-500 hover:bg-blue-600 ml-4 px-4 py-2 text-sm hover:text-gray-50 rounded-sm"
+                    >
+                        Check Answer
+                    </button>
+                    <span className="text-lg">{answer}</span>
                 </section>
             </section>
         </main>
