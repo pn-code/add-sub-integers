@@ -8,6 +8,10 @@ export default function Home() {
     const [secondInteger, setSecondInteger] = useState<number | null>(null);
     const [operator, setOperator] = useState<string | null>(null);
 
+    const [modifiedSecondInteger, setModifiedSecondInteger] =
+        useState(secondInteger);
+    const [modifiedOperator, setModifiedOperator] = useState(operator);
+
     useEffect(() => {
         randomizeEquation();
     }, []);
@@ -19,24 +23,33 @@ export default function Home() {
 
     const generateRandomInteger = () => {
         const randomOperator = generateRandomBoolean() ? "+" : "-";
-        const multiplier = Number(`${randomOperator }1`)
+        const multiplier = Number(`${randomOperator}1`);
         return (Math.floor(Math.random() * 10) + 1) * multiplier;
     };
 
     const randomizeIntegers = () => {
-        setFirstInteger(generateRandomInteger());
-        setSecondInteger(generateRandomInteger());
+        const num1 = generateRandomInteger();
+        const num2 = generateRandomInteger();
+        setFirstInteger(num1);
+        setSecondInteger(num2);
+        setModifiedSecondInteger(num2);
     };
 
     const randomizeOperator = () => {
-        const randomBoolean = generateRandomBoolean();
-        setOperator(randomBoolean ? "+" : "-");
+        const randomOperator = generateRandomBoolean() ? "+" : "-"
+        setOperator(randomOperator);
+        setModifiedOperator(randomOperator);
     };
 
     const randomizeEquation = () => {
         randomizeOperator();
         randomizeIntegers();
     };
+
+    const handleKeepChangeChange = () => {
+        setModifiedOperator((prev) => prev === "+" ? "-" : "+");
+        setModifiedSecondInteger((prev) => prev! * -1)
+    }
 
     return (
         <main className="bg-black text-white w-full min-h-screen flex flex-col sm:flex-row gap-8 items-center sm:justify-center">
@@ -56,8 +69,22 @@ export default function Home() {
                     <span>{secondInteger}</span>
                 </section>
 
+                <section className="text-5xl mb-8 flex gap-2 h-12">
+                    <span>{firstInteger}</span>
+                        <button type="button" onClick={handleKeepChangeChange} className="hover:bg-gray-800">
+                            {modifiedOperator}
+                        </button>
+                    <span>{modifiedSecondInteger}</span>
+                </section>
+
                 {/* Randomizer Button */}
-                <button onClick={randomizeEquation} type="button" className="text-amber-300 px-4 py-2 hover:text-amber-100">Randomize</button>
+                <button
+                    onClick={randomizeEquation}
+                    type="button"
+                    className="text-amber-300 px-4 py-2 hover:text-amber-100"
+                >
+                    Randomize
+                </button>
 
                 {/* Positive Blocks */}
                 <section className="flex flex-col gap-2 items-center">
