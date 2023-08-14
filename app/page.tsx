@@ -11,10 +11,6 @@ export default function Home() {
     const [positiveBlocks, setPositiveBlocks] = useState<string[]>([]);
     const [negativeBlocks, setNegativeBlocks] = useState<string[]>([]);
 
-    const [modifiedSecondInteger, setModifiedSecondInteger] =
-        useState(secondInteger);
-    const [modifiedOperator, setModifiedOperator] = useState(operator);
-
     useEffect(() => {
         randomizeEquation();
     }, []);
@@ -35,13 +31,11 @@ export default function Home() {
         const num2 = generateRandomInteger();
         setFirstInteger(num1);
         setSecondInteger(num2);
-        setModifiedSecondInteger(num2);
     };
 
     const randomizeOperator = () => {
         const randomOperator = generateRandomBoolean() ? "+" : "-";
         setOperator(randomOperator);
-        setModifiedOperator(randomOperator);
     };
 
     const clearPositiveBlocks = () => {
@@ -64,8 +58,8 @@ export default function Home() {
     };
 
     const handleKeepChangeChange = () => {
-        setModifiedOperator((prev) => (prev === "+" ? "-" : "+"));
-        setModifiedSecondInteger((prev) => prev! * -1);
+        setOperator((prev) => (prev === "+" ? "-" : "+"));
+        setSecondInteger((prev) => prev! * -1);
     };
 
     const handleOnDrop = (e: React.DragEvent) => {
@@ -83,6 +77,16 @@ export default function Home() {
         e.preventDefault();
     };
 
+    const handleAddBlock = (field: string) => {
+        const targetField = field === "positive" ? "positive" : "negative";
+
+        if (targetField === "positive") {
+            setPositiveBlocks((prev) => [...prev, "green"]);
+        } else {
+            setNegativeBlocks((prev) => [...prev, "red"]);
+        }
+    };
+
     return (
         <main className="bg-black text-white w-full min-h-screen flex flex-col gap-8 items-center sm:justify-center">
             {/* Sidebar */}
@@ -94,22 +98,16 @@ export default function Home() {
             {/* Main App */}
             <section className="flex flex-col gap-4 items-center sm:min-w-[200px]">
                 {/* Equation Display */}
-                <section className="text-3xl mb-8 flex items-center gap-2 h-12">
-                    <span>{firstInteger}</span>
-                    <span className="px-2">{operator}</span>
-                    <span>{secondInteger}</span>
-                </section>
-
-                <section className="text-3xl mb-8 flex items-center gap-2 h-12">
+                <section className="text-4xl mb-8 flex items-center gap-2 h-12">
                     <span>{firstInteger}</span>
                     <button
                         type="button"
                         onClick={handleKeepChangeChange}
                         className="hover:bg-gray-800 rounded-md px-2"
                     >
-                        {modifiedOperator}
+                        {operator}
                     </button>
-                    <span>{modifiedSecondInteger}</span>
+                    <span>{secondInteger}</span>
                 </section>
 
                 <section>
@@ -134,20 +132,30 @@ export default function Home() {
                 <section className="flex flex-col gap-2 items-center">
                     <header className="flex gap-10">
                         <h2 className="text-lg font-bold">Positive Blocks</h2>
-                        <button
-                            onClick={clearPositiveBlocks}
-                            type="button"
-                            className="text-sm underline"
-                        >
-                            Clear
-                        </button>
+
+                        <section className="text-sm flex gap-4">
+                            <button
+                                className="px-2 py-1 bg-indigo-600 rounded-sm hover:bg-indigo-500"
+                                onClick={() => handleAddBlock("positive")}
+                                type="button"
+                            >
+                                Add
+                            </button>
+                            <button
+                                onClick={clearPositiveBlocks}
+                                type="button"
+                                className="text-sm underline hover:text-gray-200"
+                            >
+                                Clear
+                            </button>
+                        </section>
                     </header>
 
                     <section
                         id="green"
                         onDragOver={(e) => handleDragOver(e)}
                         onDrop={(e) => handleOnDrop(e)}
-                        className="px-4 flex gap-2 border-y-2 items-center border-gray-200 w-full py-2 justify-center h-20 bg-gray-800"
+                        className="w-[320px] min-h-[80px] flex-wrap px-4 flex gap-2 border-y-2 items-center border-gray-200 py-2 justify-start bg-gray-800"
                     >
                         {positiveBlocks.map((block, idx) => (
                             <Block key={idx} color={"green"} />
@@ -159,20 +167,30 @@ export default function Home() {
                 <section className="flex flex-col gap-2 items-center">
                     <header className="flex gap-10">
                         <h2 className="text-lg font-bold">Negative Blocks</h2>
-                        <button
-                            onClick={clearNegativeBlocks}
-                            type="button"
-                            className="text-sm underline"
-                        >
-                            Clear
-                        </button>
+
+                        <section className="text-sm flex gap-4">
+                            <button
+                                className="px-2 py-1 bg-indigo-600 rounded-sm hover:bg-indigo-500"
+                                onClick={() => handleAddBlock("negative")}
+                                type="button"
+                            >
+                                Add
+                            </button>
+                            <button
+                                onClick={clearNegativeBlocks}
+                                type="button"
+                                className="text-sm underline hover:text-gray-200"
+                            >
+                                Clear
+                            </button>
+                        </section>
                     </header>
 
                     <section
                         id="red"
                         onDragOver={(e) => handleDragOver(e)}
                         onDrop={(e) => handleOnDrop(e)}
-                        className="px-4 flex gap-2 border-y-2 items-center border-gray-200 w-full py-2 justify-center h-20 bg-gray-800"
+                        className="w-[320px] min-h-[80px] flex-wrap px-4 flex gap-2 border-y-2 items-center border-gray-200 py-2 justify-start bg-gray-800"
                     >
                         {negativeBlocks.map((block, idx) => (
                             <Block key={idx} color={"red"} />
