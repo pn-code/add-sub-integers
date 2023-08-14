@@ -12,18 +12,25 @@ export default function Home() {
         randomizeEquation();
     }, []);
 
-    const generateRandomNumberUpToTen = () => {
-        return Math.floor(Math.random() * 10) + 1;
+    const generateRandomBoolean = () => {
+        const randomNum = Math.floor(Math.random() * 10) + 1;
+        return randomNum > 5 ? true : false;
+    };
+
+    const generateRandomInteger = () => {
+        const randomOperator = generateRandomBoolean() ? "+" : "-";
+        const multiplier = Number(`${randomOperator }1`)
+        return (Math.floor(Math.random() * 10) + 1) * multiplier;
     };
 
     const randomizeIntegers = () => {
-        setFirstInteger(generateRandomNumberUpToTen());
-        setSecondInteger(generateRandomNumberUpToTen());
+        setFirstInteger(generateRandomInteger());
+        setSecondInteger(generateRandomInteger());
     };
 
     const randomizeOperator = () => {
-        const randomNumber = Math.floor(Math.random() * 10) + 1;
-        setOperator(randomNumber > 5 ? "+" : "-");
+        const randomBoolean = generateRandomBoolean();
+        setOperator(randomBoolean ? "+" : "-");
     };
 
     const randomizeEquation = () => {
