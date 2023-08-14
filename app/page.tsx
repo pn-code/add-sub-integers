@@ -10,6 +10,7 @@ export default function Home() {
 
     const [positiveBlocks, setPositiveBlocks] = useState<string[]>([]);
     const [negativeBlocks, setNegativeBlocks] = useState<string[]>([]);
+    const totalBlocks = positiveBlocks.length - negativeBlocks.length;
 
     useEffect(() => {
         randomizeEquation();
@@ -91,7 +92,7 @@ export default function Home() {
         <main className="bg-black text-white w-full min-h-screen flex flex-col gap-8 items-center sm:justify-center">
             {/* Sidebar */}
             <section className="sm:w-[300px] bg-gray-800 rounded-sm py-4 w-full flex gap-4 items-center justify-center">
-                <h2 className="font-semibold text-lg">Block Creator</h2>
+                <h2 className="font-semibold text-lg">Drag and Drop Block</h2>
                 <BlockOrigin />
             </section>
 
@@ -196,6 +197,19 @@ export default function Home() {
                             <Block key={idx} color={"red"} />
                         ))}
                     </section>
+                </section>
+
+                <section className="flex gap-14 justify-between w-full px-8">
+                    <h2 className="text-lg font-bold text-left text-amber-300">
+                        Total After Operations:
+                    </h2>
+                    <span
+                        className={
+                            totalBlocks > 0 ? "text-lg text-green-300 font-bold" : "text-lg text-red-300 font-bold"
+                        }
+                    >
+                        {totalBlocks}
+                    </span>
                 </section>
             </section>
         </main>
