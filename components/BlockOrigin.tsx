@@ -9,7 +9,7 @@ export default function BlockOrigin() {
         <div
             onDragStart={(e) => handleOnDragOrigin(e)}
             draggable
-            className="w-12 h-12 bg-gray-400 border-white border-2 rounded-sm"
+            className="w-12 h-12 bg-gray-400 border-white border-2 rounded-sm cursor-move"
         ></div>
     );
 }
