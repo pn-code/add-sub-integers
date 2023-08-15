@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import Block from "@/components/Block";
-import BlockOrigin from "@/components/BlockOrigin";
 import Tooltip from "@/components/Tooltip";
+import DropBlockSection from "@/components/DropBlockSection";
 
 export default function Home() {
     const [firstInteger, setFirstInteger] = useState<number | null>(null);
@@ -105,17 +105,11 @@ export default function Home() {
 
     return (
         <main className="bg-black text-white w-full min-h-screen flex flex-col sm:flex-row sm:gap-10 items-center sm:justify-center">
-            <div className="w-full flex flex-col gap-8">
-                {/* Sidebar */}
-                <section className="sm:w-[300px] bg-gray-800 rounded-sm py-4 w-full flex gap-4 items-center justify-center">
-                    <h2 className="font-semibold text-lg">
-                        Drag and Drop Block
-                    </h2>
-                    <BlockOrigin />
-                </section>
+            <div className="w-full sm:w-[320px] flex flex-col items-center gap-8">
+                <section className="flex flex-col gap-4 items-center sm:min-w-[200px] w-full">
+                    {/* Top Section */}
+                    <DropBlockSection />
 
-                {/* Main App */}
-                <section className="flex flex-col gap-4 items-center sm:min-w-[200px]">
                     {/* Equation Display */}
                     <section className="text-4xl mb-8 flex items-center gap-2 h-12">
                         <span>{firstInteger}</span>
@@ -150,7 +144,7 @@ export default function Home() {
                     {/* Positive Blocks */}
                     <section className="flex flex-col gap-2 items-center">
                         <header className="w-full flex gap-10 justify-between sm:px-2">
-                            <h2 className="text-lg font-bold flex gap-2">
+                            <h2 className="text-lg font-semibold flex gap-2">
                                 <button
                                     onClick={() =>
                                         setIsFirstIntegerPositive(
@@ -205,7 +199,7 @@ export default function Home() {
                     {/* Negative Blocks */}
                     <section className="flex flex-col gap-2 items-center">
                         <header className="w-full flex gap-10 justify-between sm:px-2">
-                            <h2 className="text-lg font-bold flex gap-2">
+                            <h2 className="text-lg font-semibold flex gap-2">
                                 <button
                                     onClick={() =>
                                         setIsSecondIntegerPositive(
