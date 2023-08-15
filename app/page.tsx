@@ -71,7 +71,7 @@ export default function Home() {
         randomizeOperator();
         randomizeIntegers();
         clearBlocks();
-        setTotal("")
+        setTotal("");
     };
 
     const handleKeepChangeChange = () => {
@@ -188,12 +188,18 @@ export default function Home() {
                             onDrop={(e) => handleOnDrop(e)}
                             className="w-[320px] min-h-[80px] flex-wrap px-4 flex gap-2 border-y-2 items-center border-gray-200 py-2 justify-start bg-gray-800"
                         >
-                            {firstIntegerBlocks.map((block, idx) => (
-                                <Block
-                                    key={idx}
-                                    positive={isFirstIntegerPositive}
-                                />
-                            ))}
+                            {firstIntegerBlocks.length > 0 ? (
+                                firstIntegerBlocks.map((block, idx) => (
+                                    <Block
+                                        key={idx}
+                                        positive={isFirstIntegerPositive}
+                                    />
+                                ))
+                            ) : (
+                                <span className="w-full text-center text-gray-200">
+                                    Add Blocks Here!
+                                </span>
+                            )}
                         </section>
                     </section>
 
@@ -243,12 +249,18 @@ export default function Home() {
                             onDrop={(e) => handleOnDrop(e)}
                             className="w-[320px] min-h-[80px] flex-wrap px-4 flex gap-2 border-y-2 items-center border-gray-200 py-2 justify-start bg-gray-800"
                         >
-                            {secondIntegerBlocks.map((block, idx) => (
-                                <Block
-                                    key={idx}
-                                    positive={isSecondIntegerPositive}
-                                />
-                            ))}
+                            {secondIntegerBlocks.length > 0 ? (
+                                secondIntegerBlocks.map((block, idx) => (
+                                    <Block
+                                        key={idx}
+                                        positive={isSecondIntegerPositive}
+                                    />
+                                ))
+                            ) : (
+                                <span className="w-full text-center text-gray-200">
+                                    Add Blocks Here!
+                                </span>
+                            )}
                         </section>
                     </section>
 
