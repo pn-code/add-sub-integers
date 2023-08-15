@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function Block({ color }: { color: string }) {
-    const blockStyles = color === "green" ? "w-12 h-12 bg-green-500 border-white border-2 rounded-sm" : "w-12 h-12 bg-red-500 border-white border-2 rounded-sm"
-    return (
-        <div draggable className={blockStyles}></div>
-    );
+export default function Block({ positive }: { positive: boolean }) {
+    const blockStyles = positive
+        ? "w-12 h-12 bg-blue-500 border-white border-2 rounded-sm"
+        : "w-12 h-12 bg-red-500 border-white border-2 rounded-sm";
+    return <div draggable className={blockStyles}></div>;
 }
