@@ -4,7 +4,7 @@ export default function Tooltip() {
     return (
         <section className="sm:w-[320px] flex flex-col gap-5 mt-10 p-6 bg-gray-800 sm:p-8 rounded-sm sm:h-[560px] mb-10">
             <h2 className="text-xl font-semibold">Tool Tips</h2>
-            <ul className="list-disc">
+            <ul className="list-disc flex flex-col gap-4 text-sm">
                 <li className="text-blue-400">Blue blocks are positive.</li>
                 <li className="text-red-400">Red blocks are negative.</li>
                 <li>
