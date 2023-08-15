@@ -18,9 +18,13 @@ export default function Home() {
     const [isSecondIntegerPositive, setIsSecondIntegerPositive] =
         useState<boolean>(false);
 
-    const [answer, setAnswer] = useState<number | null>(null);
+    const [total, setTotal] = useState<number>();
 
-    const totalBlocks = 0;
+    const answer =
+        operator === "+"
+            ? firstInteger! + secondInteger!
+            : firstInteger! - secondInteger!;
+    const totalIsAnswer = total == answer;
 
     useEffect(() => {
         randomizeEquation();
@@ -66,7 +70,6 @@ export default function Home() {
         randomizeOperator();
         randomizeIntegers();
         clearBlocks();
-        setAnswer(null);
     };
 
     const handleKeepChangeChange = () => {
@@ -99,13 +102,6 @@ export default function Home() {
         }
     };
 
-    const handleCheckAnswer = () => {
-        const answer =
-            operator === "+"
-                ? firstInteger! + secondInteger!
-                : firstInteger! - secondInteger!;
-        setAnswer(answer);
-    };
 
     return (
         <main className="bg-black text-white w-full min-h-screen flex flex-col gap-8 items-center sm:justify-center">
@@ -254,29 +250,31 @@ export default function Home() {
                     </section>
                 </section>
 
-                <section className="flex gap-14 justify-between w-full px-8">
-                    <h2 className="text-lg font-bold text-left text-amber-300">
-                        Total After Operations:
-                    </h2>
+                <section className="flex gap-4 justify-between items-center w-full">
+                    <section className="flex gap-4 items-center">
+                        <label
+                            htmlFor="total"
+                            className="text-lg font-bold text-left text-amber-300"
+                        >
+                            Enter Total:
+                        </label>
+                        <input
+                            id="total"
+                            onChange={(e: any) => setTotal(e.target.value)}
+                            value={total}
+                            className="w-12 px-2 py-1 rounded-sm bg-gray-700"
+                        />
+                    </section>
+
                     <span
                         className={
-                            totalBlocks > 0
-                                ? "text-lg text-green-300 font-bold"
-                                : "text-lg text-red-300 font-bold"
+                            totalIsAnswer
+                                ? "text-lg text-green-400"
+                                : "text-lg text-red-400"
                         }
                     >
-                        {totalBlocks}
+                        {totalIsAnswer ? "Correct" : "Incorrect"}
                     </span>
-                </section>
-                <section className="flex justify-between w-full items-center px-8 mb-4">
-                    <button
-                        onClick={handleCheckAnswer}
-                        type="button"
-                        className="bg-blue-500 hover:bg-blue-600 ml-4 px-4 py-2 text-sm hover:text-gray-50 rounded-sm"
-                    >
-                        Check Answer
-                    </button>
-                    <span className="text-lg">{answer}</span>
                 </section>
             </section>
         </main>
