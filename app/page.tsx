@@ -145,7 +145,7 @@ export default function Home() {
 
                 {/* Positive Blocks */}
                 <section className="flex flex-col gap-2 items-center">
-                    <header className="flex gap-10">
+                    <header className="w-full flex gap-10 justify-between">
                         <h2 className="text-lg font-bold flex gap-2">
                             <button
                                 onClick={() =>
@@ -198,7 +198,7 @@ export default function Home() {
 
                 {/* Negative Blocks */}
                 <section className="flex flex-col gap-2 items-center">
-                    <header className="flex gap-10">
+                    <header className="w-full flex gap-10 justify-between">
                         <h2 className="text-lg font-bold flex gap-2">
                             <button
                                 onClick={() =>
