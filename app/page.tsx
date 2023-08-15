@@ -81,9 +81,9 @@ export default function Home() {
         const blockColor = e.currentTarget.id;
         const blockType = e.dataTransfer.getData("blockType") as string;
 
-        if (blockColor === "red" && blockType === "origin") {
+        if (blockColor === "first" && blockType === "origin") {
             setFirstIntegerBlocks((prev) => [...prev, 1]);
-        } else if (blockColor === "green" && blockType === "origin") {
+        } else if (blockColor === "second" && blockType === "origin") {
             setSecondIntegerBlocks((prev) => [...prev, 1]);
         }
     };
@@ -101,7 +101,6 @@ export default function Home() {
             setSecondIntegerBlocks((prev) => [...prev, 1]);
         }
     };
-
 
     return (
         <main className="bg-black text-white w-full min-h-screen flex flex-col gap-8 items-center sm:justify-center">
@@ -183,7 +182,7 @@ export default function Home() {
                     </header>
 
                     <section
-                        id="green"
+                        id="first"
                         onDragOver={(e) => handleDragOver(e)}
                         onDrop={(e) => handleOnDrop(e)}
                         className="w-[320px] min-h-[80px] flex-wrap px-4 flex gap-2 border-y-2 items-center border-gray-200 py-2 justify-start bg-gray-800"
@@ -236,7 +235,7 @@ export default function Home() {
                     </header>
 
                     <section
-                        id="red"
+                        id="second"
                         onDragOver={(e) => handleDragOver(e)}
                         onDrop={(e) => handleOnDrop(e)}
                         className="w-[320px] min-h-[80px] flex-wrap px-4 flex gap-2 border-y-2 items-center border-gray-200 py-2 justify-start bg-gray-800"
