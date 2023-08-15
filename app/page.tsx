@@ -19,7 +19,7 @@ export default function Home() {
     const [isSecondIntegerPositive, setIsSecondIntegerPositive] =
         useState<boolean>(false);
 
-    const [total, setTotal] = useState<number>();
+    const [total, setTotal] = useState<number | "">("");
 
     const answer =
         operator === "+"
@@ -71,6 +71,7 @@ export default function Home() {
         randomizeOperator();
         randomizeIntegers();
         clearBlocks();
+        setTotal("")
     };
 
     const handleKeepChangeChange = () => {
