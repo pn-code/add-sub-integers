@@ -8,11 +8,19 @@ export default function Home() {
     const [secondInteger, setSecondInteger] = useState<number | null>(null);
     const [operator, setOperator] = useState<string | null>(null);
 
-    const [positiveBlocks, setPositiveBlocks] = useState<string[]>([]);
-    const [negativeBlocks, setNegativeBlocks] = useState<string[]>([]);
+    const [firstIntegerBlocks, setFirstIntegerBlocks] = useState<number[]>([]);
+    const [secondIntegerBlocks, setSecondIntegerBlocks] = useState<number[]>(
+        []
+    );
+
+    const [isFirstIntegerPositive, setIsFirstIntegerPositive] =
+        useState<boolean>(true);
+    const [isSecondIntegerPositive, setIsSecondIntegerPositive] =
+        useState<boolean>(false);
+
     const [answer, setAnswer] = useState<number | null>(null);
 
-    const totalBlocks = positiveBlocks.length - negativeBlocks.length;
+    const totalBlocks = 0;
 
     useEffect(() => {
         randomizeEquation();
@@ -41,17 +49,17 @@ export default function Home() {
         setOperator(randomOperator);
     };
 
-    const clearPositiveBlocks = () => {
-        setPositiveBlocks([]);
+    const clearFirstIntegerBlocks = () => {
+        setFirstIntegerBlocks([]);
     };
 
-    const clearNegativeBlocks = () => {
-        setNegativeBlocks([]);
+    const clearSecondIntegerBlocks = () => {
+        setSecondIntegerBlocks([]);
     };
 
     const clearBlocks = () => {
-        clearPositiveBlocks();
-        clearNegativeBlocks();
+        clearFirstIntegerBlocks();
+        clearSecondIntegerBlocks();
     };
 
     const randomizeEquation = () => {
@@ -71,9 +79,9 @@ export default function Home() {
         const blockType = e.dataTransfer.getData("blockType") as string;
 
         if (blockColor === "red" && blockType === "origin") {
-            setNegativeBlocks((prev) => [...prev, "red"]);
+            setFirstIntegerBlocks((prev) => [...prev, 1]);
         } else if (blockColor === "green" && blockType === "origin") {
-            setPositiveBlocks((prev) => [...prev, "green"]);
+            setSecondIntegerBlocks((prev) => [...prev, 1]);
         }
     };
 
@@ -85,9 +93,9 @@ export default function Home() {
         const targetField = field === "positive" ? "positive" : "negative";
 
         if (targetField === "positive") {
-            setPositiveBlocks((prev) => [...prev, "green"]);
+            setFirstIntegerBlocks((prev) => [...prev, 1]);
         } else {
-            setNegativeBlocks((prev) => [...prev, "red"]);
+            setSecondIntegerBlocks((prev) => [...prev, 1]);
         }
     };
 
@@ -144,10 +152,20 @@ export default function Home() {
                 <section className="flex flex-col gap-2 items-center">
                     <header className="flex gap-10">
                         <h2 className="text-lg font-bold flex gap-2">
-                            <span className="bg-green-600 px-2 rounded-full">
-                                {positiveBlocks.length}
-                            </span>
-                            Positive Blocks
+                            <button
+                                onClick={() =>
+                                    setIsFirstIntegerPositive((prev) => !prev)
+                                }
+                                type="button"
+                                className={
+                                    isFirstIntegerPositive
+                                        ? "bg-blue-600 px-2 rounded-full"
+                                        : "bg-red-600 px-2 rounded-full"
+                                }
+                            >
+                                {firstIntegerBlocks.length}
+                            </button>
+                            First Integer
                         </h2>
 
                         <section className="text-sm flex gap-4">
@@ -159,7 +177,7 @@ export default function Home() {
                                 Add
                             </button>
                             <button
-                                onClick={clearPositiveBlocks}
+                                onClick={clearFirstIntegerBlocks}
                                 type="button"
                                 className="text-sm underline hover:text-gray-200"
                             >
@@ -174,8 +192,11 @@ export default function Home() {
                         onDrop={(e) => handleOnDrop(e)}
                         className="w-[320px] min-h-[80px] flex-wrap px-4 flex gap-2 border-y-2 items-center border-gray-200 py-2 justify-start bg-gray-800"
                     >
-                        {positiveBlocks.map((block, idx) => (
-                            <Block key={idx} color={"green"} />
+                        {firstIntegerBlocks.map((block, idx) => (
+                            <Block
+                                key={idx}
+                                positive={isFirstIntegerPositive}
+                            />
                         ))}
                     </section>
                 </section>
@@ -184,10 +205,20 @@ export default function Home() {
                 <section className="flex flex-col gap-2 items-center">
                     <header className="flex gap-10">
                         <h2 className="text-lg font-bold flex gap-2">
-                            <span className="bg-red-600 px-2 rounded-full">
-                                {negativeBlocks.length}
-                            </span>
-                            Negative Blocks
+                            <button
+                                onClick={() =>
+                                    setIsSecondIntegerPositive((prev) => !prev)
+                                }
+                                type="button"
+                                className={
+                                    isSecondIntegerPositive
+                                        ? "bg-blue-600 px-2 rounded-full"
+                                        : "bg-red-600 px-2 rounded-full"
+                                }
+                            >
+                                {secondIntegerBlocks.length}
+                            </button>
+                            Second Integer
                         </h2>
 
                         <section className="text-sm flex gap-4">
@@ -199,7 +230,7 @@ export default function Home() {
                                 Add
                             </button>
                             <button
-                                onClick={clearNegativeBlocks}
+                                onClick={clearSecondIntegerBlocks}
                                 type="button"
                                 className="text-sm underline hover:text-gray-200"
                             >
@@ -214,8 +245,11 @@ export default function Home() {
                         onDrop={(e) => handleOnDrop(e)}
                         className="w-[320px] min-h-[80px] flex-wrap px-4 flex gap-2 border-y-2 items-center border-gray-200 py-2 justify-start bg-gray-800"
                     >
-                        {negativeBlocks.map((block, idx) => (
-                            <Block key={idx} color={"red"} />
+                        {secondIntegerBlocks.map((block, idx) => (
+                            <Block
+                                key={idx}
+                                positive={isSecondIntegerPositive}
+                            />
                         ))}
                     </section>
                 </section>
@@ -234,7 +268,7 @@ export default function Home() {
                         {totalBlocks}
                     </span>
                 </section>
-                <section className="flex justify-between w-full items-center px-8">
+                <section className="flex justify-between w-full items-center px-8 mb-4">
                     <button
                         onClick={handleCheckAnswer}
                         type="button"
