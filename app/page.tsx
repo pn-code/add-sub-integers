@@ -105,7 +105,7 @@ export default function Home() {
 
     return (
         <main className="bg-black text-white w-full min-h-screen flex flex-col sm:flex-row sm:gap-10 items-center sm:justify-center">
-            <div className="flex flex-col gap-8">
+            <div className="w-full flex flex-col gap-8">
                 {/* Sidebar */}
                 <section className="sm:w-[300px] bg-gray-800 rounded-sm py-4 w-full flex gap-4 items-center justify-center">
                     <h2 className="font-semibold text-lg">
@@ -149,7 +149,7 @@ export default function Home() {
 
                     {/* Positive Blocks */}
                     <section className="flex flex-col gap-2 items-center">
-                        <header className="w-full flex gap-10 justify-between px-2">
+                        <header className="w-full flex gap-10 justify-between sm:px-2">
                             <h2 className="text-lg font-bold flex gap-2">
                                 <button
                                     onClick={() =>
@@ -204,7 +204,7 @@ export default function Home() {
 
                     {/* Negative Blocks */}
                     <section className="flex flex-col gap-2 items-center">
-                        <header className="w-full flex gap-10 justify-between px-2">
+                        <header className="w-full flex gap-10 justify-between sm:px-2">
                             <h2 className="text-lg font-bold flex gap-2">
                                 <button
                                     onClick={() =>
@@ -257,7 +257,7 @@ export default function Home() {
                         </section>
                     </section>
 
-                    <section className="flex gap-4 justify-between items-center w-full">
+                    <section className="flex gap-4 justify-between items-center w-full px-3">
                         <section className="flex gap-4 items-center">
                             <label
                                 htmlFor="total"
