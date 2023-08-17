@@ -4,15 +4,21 @@ import Block from "@/components/Block";
 import Tooltip from "@/components/Tooltip";
 import DropBlockSection from "@/components/DropBlockSection";
 
+interface BlockObject {
+    isCrossed: boolean;
+}
+
 export default function Home() {
     const [firstInteger, setFirstInteger] = useState<number | null>(null);
     const [secondInteger, setSecondInteger] = useState<number | null>(null);
     const [operator, setOperator] = useState<string | null>(null);
 
-    const [firstIntegerBlocks, setFirstIntegerBlocks] = useState<number[]>([]);
-    const [secondIntegerBlocks, setSecondIntegerBlocks] = useState<number[]>(
+    const [firstIntegerBlocks, setFirstIntegerBlocks] = useState<BlockObject[]>(
         []
     );
+    const [secondIntegerBlocks, setSecondIntegerBlocks] = useState<
+        BlockObject[]
+    >([]);
 
     const [isFirstIntegerPositive, setIsFirstIntegerPositive] =
         useState<boolean>(true);
@@ -93,9 +99,9 @@ export default function Home() {
         const blockType = e.dataTransfer.getData("blockType") as string;
 
         if (blockColor === "first" && blockType === "origin") {
-            setFirstIntegerBlocks((prev) => [...prev, 1]);
+            setFirstIntegerBlocks((prev) => [...prev, { isCrossed: false }]);
         } else if (blockColor === "second" && blockType === "origin") {
-            setSecondIntegerBlocks((prev) => [...prev, 1]);
+            setSecondIntegerBlocks((prev) => [...prev, { isCrossed: false }]);
         }
     };
 
@@ -107,9 +113,32 @@ export default function Home() {
         const targetField = field === "positive" ? "positive" : "negative";
 
         if (targetField === "positive") {
-            setFirstIntegerBlocks((prev) => [...prev, 1]);
+            setFirstIntegerBlocks((prev) => [...prev, { isCrossed: false }]);
         } else {
-            setSecondIntegerBlocks((prev) => [...prev, 1]);
+            setSecondIntegerBlocks((prev) => [...prev, { isCrossed: false }]);
+        }
+    };
+
+    const handleCrossBlock = (targetBlockIndex: number) => {
+        if (
+            secondIntegerBlocks[targetBlockIndex] &&
+            firstIntegerBlocks[targetBlockIndex]
+        ) {
+            setFirstIntegerBlocks((prev) =>
+                prev.map((block, index) =>
+                    index === targetBlockIndex
+                        ? { ...block, isCrossed: !block.isCrossed }
+                        : block
+                )
+            );
+
+            setSecondIntegerBlocks((prev) =>
+                prev.map((block, index) =>
+                    index === targetBlockIndex
+                        ? { ...block, isCrossed: !block.isCrossed }
+                        : block
+                )
+            );
         }
     };
 
@@ -202,6 +231,10 @@ export default function Home() {
                                     <Block
                                         key={idx}
                                         positive={isFirstIntegerPositive}
+                                        handleClick={() =>
+                                            handleCrossBlock(idx)
+                                        }
+                                        isCrossed={block.isCrossed}
                                     />
                                 ))
                             ) : (
@@ -263,6 +296,10 @@ export default function Home() {
                                     <Block
                                         key={idx}
                                         positive={isSecondIntegerPositive}
+                                        handleClick={() =>
+                                            handleCrossBlock(idx)
+                                        }
+                                        isCrossed={block.isCrossed}
                                     />
                                 ))
                             ) : (
