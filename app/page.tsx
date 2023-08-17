@@ -37,16 +37,25 @@ export default function Home() {
     };
 
     const generateRandomInteger = () => {
-        const randomOperator = generateRandomBoolean() ? "+" : "-";
-        const multiplier = Number(`${randomOperator}1`);
-        return (Math.floor(Math.random() * 10) + 1) * multiplier;
+        return Math.floor(Math.random() * 10) + 1;
     };
 
     const randomizeIntegers = () => {
-        const num1 = generateRandomInteger();
-        const num2 = generateRandomInteger();
-        setFirstInteger(num1);
-        setSecondInteger(num2);
+        const randomInteger = generateRandomInteger();
+
+        if (randomInteger > 5) {
+            const num1 = generateRandomInteger();
+            const num2 = -1 * generateRandomInteger();
+
+            setFirstInteger(num1);
+            setSecondInteger(num2);
+        } else {
+            const num1 = -1 * generateRandomInteger();
+            const num2 = generateRandomInteger();
+
+            setFirstInteger(num1);
+            setSecondInteger(num2);
+        }
     };
 
     const randomizeOperator = () => {
