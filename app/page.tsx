@@ -71,10 +71,12 @@ export default function Home() {
 
     const clearFirstIntegerBlocks = () => {
         setFirstIntegerBlocks([]);
+        setSecondIntegerBlocks(prev => prev.map(block => ({...block, isCrossed: false })));
     };
 
     const clearSecondIntegerBlocks = () => {
         setSecondIntegerBlocks([]);
+        setFirstIntegerBlocks(prev => prev.map(block => ({...block, isCrossed: false })));
     };
 
     const clearBlocks = () => {
